@@ -35,8 +35,12 @@ clock = pygame.time.Clock()
 img_dir = os.path.join(os.path.dirname(__file__), "img")
 
 # Load all game graphics
-bg_img = pygame.image.load(os.path.join(
-    img_dir, "starfield.png")).convert_alpha()
+bg_img = pygame.image.load(os.path.join(img_dir, "starfield.png")).convert_alpha()
+player_img = pygame.image.load(os.path.join(img_dir, "playerShip1_blue.png")).convert_alpha()
+laser_img = pygame.image.load(os.path.join(img_dir, "laserRed05.png")).convert_alpha()
+meteor_img = pygame.image.load(os.path.join(img_dir, "meteorGrey_med1.png")).convert_alpha()
+#mob_img = pygame.image.load(os.path.join(img_dir, "meteorGrey_med1.png")).convert_alpha()
+
 """ either one of the methods will do the job """
 # bg_img = pygame.image.load(os.path.join(img_dir, "virus2.png")).convert()
 # bg_img.set_colorkey(WHITE)

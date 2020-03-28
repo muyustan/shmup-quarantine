@@ -5,6 +5,7 @@ all_sprites = pygame.sprite.Group()
 bullets = pygame.sprite.Group()
 powerups = pygame.sprite.Group()
 mobs = pygame.sprite.Group()
+meteors = pygame.sprite.Group()
 
 # player sprite
 
@@ -16,10 +17,11 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         # pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.Surface((80, 100))
-        self.image.fill(CYAN)
-        pygame.draw.circle(self.image, RED, (40, 50), 15, 3)
-        pygame.draw.rect(self.image, BLACK, (0, 0, 80, 100), 3)
+        # self.image = pygame.Surface((80, 100))
+        # self.image.fill(CYAN)
+        self.image = player_img
+        # pygame.draw.circle(self.image, RED, (40, 50), 15, 3)
+        # pygame.draw.rect(self.image, BLACK, (0, 0, 80, 100), 3)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 5
@@ -63,6 +65,24 @@ class Player(pygame.sprite.Sprite):
         print("Shield Activated!")
 
 
+class Meteor(pygame.sprite.Sprite):
+
+    SPEED = 4
+
+    def __init__(self):
+        super().__init__()
+        self.image = meteor_img
+        self.rect = self.image.get_rect()
+        self.rect.left = random.randint(0, WIDTH - self.rect.width)
+        self.rect.bottom = random.randint(-2 * self.rect.height, 0)
+        self.speedy = random.randint(3, 7)
+
+    def update(self):
+        self.rect.y += self.speedy
+        if self.rect.top > HEIGHT:
+            self.kill()
+
+
 class Mob(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -83,8 +103,9 @@ class Mob(pygame.sprite.Sprite):
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.image = pygame.Surface((BULLET_W, BULLET_H))
-        self.image.fill(RED)
+        # self.image = pygame.Surface((BULLET_W, BULLET_H))
+        # self.image.fill(RED)
+        self.image = laser_img
         self.rect = self.image.get_rect()
         self.rect.centerx = x
         self.rect.bottom = y

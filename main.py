@@ -4,7 +4,7 @@ import sprites
 import time
 
 # initiate some variables
-max_bullet = 10  # number of bullets which is allowed to be on screen at a moment
+max_bullet = 15  # number of bullets which is allowed to be on screen at a moment
 running = True  # game loop control variable
 
 power_up_funcs = [
@@ -37,10 +37,15 @@ while running:
         else:
             pass
 
-    while len(sprites.mobs) != 9:
-        m = sprites.Mob()
+    # while len(sprites.mobs) != 9:
+    #     m = sprites.Mob()
+    #     sprites.all_sprites.add(m)
+    #     sprites.mobs.add(m)
+
+    while len(sprites.meteors) != 5:
+        m = sprites.Meteor()
         sprites.all_sprites.add(m)
-        sprites.mobs.add(m)
+        sprites.meteors.add(m)
 
     keystate = pygame.key.get_pressed()
     player.speedx = 0
@@ -69,6 +74,10 @@ while running:
         # this is necessary, because, otherwise the shooting ability was stuck when player shoots a mob within the range of forbidden margin for continious fire. This is due to the fact that when you kill a sprite by sprite.kill(), sprite maintains its attributes.
         hits[m][0].rect.bottom = -1
 
+    hits = pygame.sprite.groupcollide(sprites.meteors, sprites.bullets, True, True)
+    for m in hits:
+        hits[m][0].rect.bottom = -1  # same reasoning as above.
+
     hits = pygame.sprite.spritecollide(player, sprites.mobs, True)
     for m in hits:
         player.decrease_HP()
@@ -80,7 +89,7 @@ while running:
     sprites.all_sprites.update()
 
     # Draw / render
-    screen.fill(YELLOW)
+    screen.fill(YELLOW)  # to debug any possible mistakes on bg placement
     screen.blit(bg_img, (0, 0))
     # this is my way to fill background with appropriate dimensions.
     screen.blit(bg_img, (bg_img.get_size()[0], 0))
