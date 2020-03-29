@@ -6,12 +6,10 @@ import os
 WIDTH = 700
 HEIGHT = 960
 FPS = 60
-BULLET_H = 24
-BULLET_W = 8
-POWERUP_H = 30
-POWERUP_W = 30
-MOB_W = 50
-MOB_H = 80
+BULLET_SPEED = 10
+METEOR_SPEED_MULTIPLIER = 1
+POWERUP_SPEED = 4
+PLAYER_SPEED = 9
 MARGIN = 10
 
 # define colors
@@ -40,6 +38,8 @@ player_img = pygame.image.load(os.path.join(img_dir, "playerShip1_blue.png")).co
 laser_img = pygame.image.load(os.path.join(img_dir, "laserRed05.png")).convert_alpha()
 meteor_img = pygame.image.load(os.path.join(img_dir, "meteorGrey_med1.png")).convert_alpha()
 mob_img = pygame.image.load(os.path.join(img_dir, "enemyBlack5.png")).convert_alpha()
+life_img = pygame.image.load(os.path.join(img_dir, "pill_red.png")).convert_alpha()
+shield_img = pygame.image.load(os.path.join(img_dir, "powerupBlue_shield.png")).convert_alpha()
 
 """ either one of the methods will do the job """
 # bg_img = pygame.image.load(os.path.join(img_dir, "virus2.png")).convert()
