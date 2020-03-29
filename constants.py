@@ -6,6 +6,8 @@ import os
 WIDTH = 700
 HEIGHT = 960
 FPS = 60
+NUM_METEORS = 10
+NUM_MOBS = 4
 BULLET_SPEED = 10
 METEOR_SPEED_MULTIPLIER = 1
 POWERUP_SPEED = 4
@@ -56,13 +58,18 @@ shield_img.set_colorkey(BLACK)
 
 meteor_dict = {  # "name" : [pygame_image, point]
 
+    "tiny1_gray": [pygame.image.load(os.path.join(img_dir, "meteorBrown_tiny1.png")).convert_alpha(), 10],
+    "tiny2_brown": [pygame.image.load(os.path.join(img_dir, "meteorGrey_tiny2.png")).convert_alpha(), 10],
+    "small1_gray": [pygame.image.load(os.path.join(img_dir, "meteorGrey_small1.png")).convert_alpha(), 5],
+    "small2_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_small2.png")).convert_alpha(), 5],
     "med1_gray": [pygame.image.load(os.path.join(img_dir, "meteorGrey_med1.png")).convert_alpha(), 3],
     "med1_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_med1.png")).convert_alpha(), 3],
     "big1_gray": [pygame.image.load(os.path.join(img_dir, "meteorGrey_big1.png")).convert_alpha(), 1],
-    "big2_gray": [pygame.image.load(os.path.join(img_dir, "meteorGrey_big2.png")).convert_alpha(), 1],
     "big3_gray": [pygame.image.load(os.path.join(img_dir, "meteorGrey_big3.png")).convert_alpha(), 1],
     "big1_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big1.png")).convert_alpha(), 1],
     "big2_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big2.png")).convert_alpha(), 1],
-    "big3_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big3.png")).convert_alpha(), 1],
 
 }
+
+# "big3_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big3.png")).convert_alpha(), 1],
+# "big2_gray": [pygame.image.load(os.path.join(img_dir, "meteorGrey_big2.png")).convert_alpha(), 1],

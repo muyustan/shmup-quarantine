@@ -38,10 +38,10 @@ while running:
         else:
             pass
 
-    while len(sprites.mobs) != 3:
+    while len(sprites.mobs) != NUM_MOBS:
         m = sprites.Mob()
 
-    while len(sprites.meteors) != 7:
+    while len(sprites.meteors) != NUM_METEORS:
         m = sprites.Meteor()
 
     keystate = pygame.key.get_pressed()

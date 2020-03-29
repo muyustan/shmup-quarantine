@@ -135,7 +135,7 @@ class Meteor(pygame.sprite.Sprite):
         _center = self.rect.center
         self.rect = self.image.get_rect()
         self.rect.center = _center
-        #pygame.draw.circle(self.image, BLUE, (self.rect.width // 2, self.rect.height // 2), self.radius, 3)
+        # pygame.draw.circle(self.image, BLUE, (self.rect.width // 2, self.rect.height // 2), self.radius, 3)
         # these 3 lines above basically makes sure that rectangle also keeps track of the rotation.
 
 # Mob sprite
@@ -185,6 +185,7 @@ class Mob(pygame.sprite.Sprite):
 class Bullet(pygame.sprite.Sprite):
 
     HEIGHT = laser_img.get_size()[1]
+    SPEED = BULLET_SPEED
 
     def __init__(self, x, y):
         super().__init__()
@@ -193,7 +194,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.centerx = x
         self.rect.bottom = y
         self.speedx = 0
-        self.speedy = -1 * BULLET_SPEED
+        self.speedy = -1 * Bullet.SPEED
 
     def update(self):
         self.rect.y += self.speedy
@@ -207,7 +208,7 @@ class Bullet(pygame.sprite.Sprite):
 
 class PowerUp(pygame.sprite.Sprite):
 
-    SPEEDY = POWERUP_SPEED
+    SPEED = POWERUP_SPEED
 
     def __init__(self):
         super().__init__()
@@ -226,6 +227,6 @@ class PowerUp(pygame.sprite.Sprite):
             pass
 
     def update(self):
-        self.rect.y += self.SPEEDY
+        self.rect.y += self.SPEED
         if self.rect.top > HEIGHT:
             self.kill()
