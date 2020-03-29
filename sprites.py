@@ -52,7 +52,7 @@ class Player(pygame.sprite.Sprite):
         self.image = player_img
         self.rect = self.image.get_rect()
         self.radius = int(self.rect.height / 2)  # this radius attribute is needed to use circular collision check.
-        pygame.draw.circle(self.image, GRAY, self.rect.center, self.radius, 3)
+        # pygame.draw.circle(self.image, GRAY, self.rect.center, self.radius, 3)
         # YOU HAVE TO DRAW THE CIRCLE BEFORE YOU MOVE THE SELF.IMAGE, BECAUSE OTHERWISE, THE SELF.RECT.CENTER COORDINATES WILL NOT BE RELATIVE TO THE SELF.IMAGE SURFACE, LIKE BELOW:
         # pygame.draw.circle(self.image, YELLOW, (self.rect.width // 2, self.rect.height // 2), self.radius, 3)
         self.rect.centerx = WIDTH / 2
@@ -70,6 +70,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.left = 0
 
     def shoot(self):
+        shoot_sound.play()
         bullet = Bullet(self.rect.centerx, self.rect.top)
         all_sprites.add(bullet)
         bullets.add(bullet)
@@ -110,7 +111,7 @@ class Meteor(pygame.sprite.Sprite):
         self.rect.left = random.randint(0, WIDTH - self.rect.width)
         self.rect.bottom = random.randint(-2 * self.rect.height, 0)
         self.speedx = random.randint(-2, 2)
-        self.speedy = random.randint(3, 7) * METEOR_SPEED_MULTIPLIER
+        self.speedy = random.randint(2, 7) * METEOR_SPEED_MULTIPLIER
         self.theta = 0
         self.dtheta = random.randint(-3, 3)  # degrees per frame
         # self.dtheta = 2
@@ -156,14 +157,20 @@ class Mob(pygame.sprite.Sprite):
         all_sprites.add(self)
         mobs.add(self)
         self.lifebar = Lifebar(self)
+        self.first = True
+        self.bottom_limit = random.randint(int(self.rect.height * 1.2), HEIGHT / 2)
         lifebars.add(self.lifebar)
         all_sprites.add(self.lifebar)
 
     def update(self):
         self.rect.left += self.speedx
         self.rect.centery += self.speedy
-        if self.rect.bottom > 300:
-            self.speedy = 0
+        if self.rect.bottom >= self.bottom_limit:
+            self.speedy *= -1
+            self.first = False
+        if self.rect.top <= 30 and not self.first:
+            self.speedy *= -1
+            self.bottom_limit = random.randint(int(self.rect.height * 1.2), HEIGHT / 2)
         if self.rect.right >= WIDTH:
             self.rect.right = WIDTH
             self.speedx *= -1

@@ -1,10 +1,13 @@
+# all imports and constant definitions
+# Frozen Jam by tgfcoder <https://twitter.com/tgfcoder> licensed under CC-BY-3 <http://creativecommons.org/licenses/by/3.0/>
+
 import pygame
 import random
 import os
 
 # define constants
-WIDTH = 700
-HEIGHT = 960
+WIDTH = 700  # make sure WIDTH % 2 = 0
+HEIGHT = 960  # make sure HEIGHT % 2 = 0
 FPS = 60
 NUM_METEORS = 10
 NUM_MOBS = 4
@@ -28,21 +31,32 @@ GRAY = (127, 127, 127)
 # setups
 
 pygame.init()
-pygame.mixer.init()
+pygame.mixer.init()  # sound system init
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("SHMUP - QUARANTINE")
 clock = pygame.time.Clock()
 
+# directories
 img_dir = os.path.join(os.path.dirname(__file__), "img")
+sound_dir = os.path.join(os.path.dirname(__file__), "sound")
+
+# Load all game sounds
+
+pygame.mixer.music.load(os.path.join(sound_dir, 'FrozenJam-SeamlessLoop.ogg'))
+pygame.mixer.music.set_volume(0.4)
+
+shoot_sound = pygame.mixer.Sound(os.path.join(sound_dir, "cheuw.wav"))
+expl_meteor_sound_list = []
+for sound_file in ["expl_meteor_1.wav"]:  # a sound effect will be chosen from this list.
+    expl_meteor_sound_list.append(pygame.mixer.Sound(os.path.join(sound_dir, sound_file)))
 
 # Load all game graphics
 
-""" either one of the methods will do the job """
-# bg_img = pygame.image.load(os.path.join(img_dir, "virus2.png")).convert()
 bg_img = pygame.image.load(os.path.join(img_dir, "starfield.png")).convert()
 
 player_img = pygame.image.load(os.path.join(img_dir, "playerShip1_orange.png")).convert()
-player_img.set_colorkey(BLACK)  # I found out that using set_colorkey() is faster than using conver_alpha()
+player_img.set_colorkey(BLACK)
+# I found out that using set_colorkey() is faster than using conver_alpha()
 
 laser_img = pygame.image.load(os.path.join(img_dir, "laserRed05.png")).convert()
 laser_img.set_colorkey(BLACK)

@@ -3,7 +3,6 @@
 from constants import *
 from functions import *
 import sprites
-import time
 
 # initiate some variables
 max_bullet = 5  # number of bullets which is allowed to be on screen at a moment
@@ -25,8 +24,10 @@ player = sprites.Player()
 # have to use this because, otherwise, for the first SPACE key pressing, the newest_bullet is not defined yet.
 newest_bullet = sprites.Bullet(0, 0)
 
-# Game loop
+# set the music !!!
+pygame.mixer.music.play(loops=-1)  # just repeat it
 
+# Game loop
 while running:
     # keep loop running at the right speed
     clock.tick(FPS)
@@ -75,6 +76,7 @@ while running:
 
     hits = pygame.sprite.groupcollide(sprites.meteors, sprites.bullets, True, True)
     for meteor in hits:
+        random.choice(expl_meteor_sound_list).play()
         hits[meteor][0].rect.bottom = -1  # same reasoning as above.
         player.score += meteor.points
 
