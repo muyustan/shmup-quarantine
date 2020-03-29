@@ -103,22 +103,42 @@ class Meteor(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.image = meteor_img
+        self.image_copy = self.image.copy()  # we have to make a copy of image to use in rotations.
         self.rect = self.image.get_rect()
         self.radius = int(self.rect.width * .95 / 2)
-        pygame.draw.circle(self.image, BLUE, self.rect.center, self.radius, 3)
+        # pygame.draw.circle(self.image, BLUE, self.rect.center, self.radius, 3)
         self.rect.left = random.randint(0, WIDTH - self.rect.width)
         self.rect.bottom = random.randint(-2 * self.rect.height, 0)
+        self.speedx = random.randint(-2, 2)
         self.speedy = random.randint(3, 7) * METEOR_SPEED_MULTIPLIER
+        self.theta = 0
+        self.dtheta = random.randint(-3, 3)  # degrees per frame
+        # self.dtheta = 2
+        # finally, add the object to the related groups
         all_sprites.add(self)
         meteors.add(self)
 
     def update(self):
+        self.rotate()
         self.rect.y += self.speedy
+        self.rect.x += self.speedx
         if self.rect.top > HEIGHT:
             self.kill()
+        if self.rect.right <= 0:
+            self.kill()
+        if self.rect.left >= WIDTH:
+            self.kill()
 
+    def rotate(self):
+        self.theta = (self.theta + self.dtheta) % 360
+        self.image = pygame.transform.rotate(self.image_copy, self.theta)
+        _center = self.rect.center
+        self.rect = self.image.get_rect()
+        self.rect.center = _center
+        # these 3 lines above basically makes sure that rectangle also keeps track of the rotation.
 
 # Mob sprite
+
 
 class Mob(pygame.sprite.Sprite):
     def __init__(self):
