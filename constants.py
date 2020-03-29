@@ -81,9 +81,9 @@ meteor_dict = {  # "name" : [pygame_image, point]
     "big1_gray": [pygame.image.load(os.path.join(img_dir, "meteorGrey_big1.png")).convert_alpha(), 1],
     "big3_gray": [pygame.image.load(os.path.join(img_dir, "meteorGrey_big3.png")).convert_alpha(), 1],
     "big1_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big1.png")).convert_alpha(), 1],
-    "big2_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big2.png")).convert_alpha(), 1],
 
 }
 
 # "big3_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big3.png")).convert_alpha(), 1],
 # "big2_gray": [pygame.image.load(os.path.join(img_dir, "meteorGrey_big2.png")).convert_alpha(), 1],
+# "big2_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big2.png")).convert_alpha(), 1],

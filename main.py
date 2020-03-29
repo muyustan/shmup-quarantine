@@ -51,7 +51,7 @@ while running:
         player.speedx += sprites.Player.SPEED
     if keystate[pygame.K_LEFT]:
         player.speedx -= sprites.Player.SPEED
-    if keystate[pygame.K_SPACE] and player.rect.top - newest_bullet.rect.bottom > sprites.Bullet.HEIGHT + MARGIN and not len(sprites.bullets) >= max_bullet:
+    if (keystate[pygame.K_SPACE] or keystate[pygame.K_UP]) and player.rect.top - newest_bullet.rect.bottom > sprites.Bullet.HEIGHT + MARGIN and not len(sprites.bullets) >= max_bullet:
         newest_bullet = player.shoot()
     # BULLET_H refers to height of the bullet and margin refers to the minimum allowable margin between two consequent b
     # If there are more than 10 bullets at a time on the screen, then no more new bullets can be fired.
