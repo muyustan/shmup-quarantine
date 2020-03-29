@@ -51,9 +51,12 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = player_img
         self.rect = self.image.get_rect()
+        self.radius = int(self.rect.width * .75 / 2)  # this radius attribute is needed to use circular collision check.
+        pygame.draw.circle(self.image, YELLOW, self.rect.center, self.radius, 3)
+        # YOU HAVE TO DRAW THE CIRCLE BEFORE YOU MOVE THE SELF.IMAGE, BECAUSE OTHERWISE, THE SELF.RECT.CENTER COORDINATES WILL NOT BE RELATIVE TO THE SELF.IMAGE SURFACE, LIKE BELOW:
+        # pygame.draw.circle(self.image, YELLOW, (self.rect.width // 2, self.rect.height // 2), self.radius, 3)
         self.rect.centerx = WIDTH / 2
-        self.rect.bottom = HEIGHT - 5
-        self.speedx = 0
+        self.rect.bottom = HEIGHT - 15  # to make it appear at a little bit higher on the screen.
         self.HP = 3
         self.shield = False
         all_sprites.add(self)
@@ -77,14 +80,14 @@ class Player(pygame.sprite.Sprite):
     def increase_HP(self):
         if self.HP <= 2:
             self.HP += 1
-            print("+1 HP", "Current HP:", self.HP)
+            print("HP UP!", "Current HP:", self.HP)
         else:
-            print("HP IS AT MAX", "--", "Current HP:", self.HP)
+            print("HP ALREADY MAX!", "--", "Current HP:", self.HP)
 
     def decrease_HP(self):
         if not self.shield:
             self.HP -= 1
-            print("-1 HP", "--", "Current HP:", self.HP)
+            print("HP DOWN!", "--", "Current HP:", self.HP)
         else:
             self.shield = False
             print("Shield protected you!")
@@ -101,6 +104,8 @@ class Meteor(pygame.sprite.Sprite):
         super().__init__()
         self.image = meteor_img
         self.rect = self.image.get_rect()
+        self.radius = int(self.rect.width * .95 / 2)
+        pygame.draw.circle(self.image, BLUE, self.rect.center, self.radius, 3)
         self.rect.left = random.randint(0, WIDTH - self.rect.width)
         self.rect.bottom = random.randint(-2 * self.rect.height, 0)
         self.speedy = random.randint(3, 7) * METEOR_SPEED_MULTIPLIER

@@ -77,7 +77,7 @@ while running:
         hits[m][0].rect.bottom = -1  # same reasoning as above.
 
     hits = pygame.sprite.spritecollide(player, sprites.mobs, True)
-    hits += pygame.sprite.spritecollide(player, sprites.meteors, True)
+    hits += pygame.sprite.spritecollide(player, sprites.meteors, True, pygame.sprite.collide_circle) # instead of rectangular collison check, we do it based on sprite.radius attribute
     for m in hits:
         player.decrease_HP()
         if player.HP <= 0:
@@ -88,7 +88,7 @@ while running:
     sprites.all_sprites.update()
 
     # Draw / render
-    screen.fill(YELLOW)  # to debug any possible mistakes on bg placement
+    # screen.fill(YELLOW)  # to debug any possible mistakes on bg placement
     screen.blit(bg_img, (0, 0))
     # this is my way to fill background with appropriate dimensions.
     screen.blit(bg_img, (bg_img.get_size()[0], 0))
