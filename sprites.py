@@ -145,7 +145,7 @@ class Meteor(pygame.sprite.Sprite):
 class Mob(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = mob_img
+        self.image = random.choice(mob_img_list)
         self.rect = self.image.get_rect()
         self.rect.left = random.randint(0, WIDTH - self.rect.width)
         self.rect.bottom = random.randint(-2 * self.rect.height, 0)

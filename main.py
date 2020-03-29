@@ -5,7 +5,7 @@ from functions import *
 import sprites
 
 # initiate some variables
-max_bullet = 5  # number of bullets which is allowed to be on screen at a moment
+
 running = True  # game loop control variable
 
 power_up_funcs = [
@@ -19,7 +19,7 @@ power_up_funcs = [
 
 
 player = sprites.Player()
-
+i = 0
 
 # have to use this because, otherwise, for the first SPACE key pressing, the newest_bullet is not defined yet.
 newest_bullet = sprites.Bullet(0, 0)
@@ -51,7 +51,7 @@ while running:
         player.speedx += sprites.Player.SPEED
     if keystate[pygame.K_LEFT]:
         player.speedx -= sprites.Player.SPEED
-    if (keystate[pygame.K_SPACE] or keystate[pygame.K_UP]) and player.rect.top - newest_bullet.rect.bottom > sprites.Bullet.HEIGHT + MARGIN and not len(sprites.bullets) >= max_bullet:
+    if (keystate[pygame.K_SPACE] or keystate[pygame.K_UP]) and (player.rect.top - newest_bullet.rect.bottom) > (sprites.Bullet.HEIGHT + MARGIN) and not (len(sprites.bullets) >= MAX_BULLET):
         newest_bullet = player.shoot()
     # BULLET_H refers to height of the bullet and margin refers to the minimum allowable margin between two consequent b
     # If there are more than 10 bullets at a time on the screen, then no more new bullets can be fired.

@@ -16,6 +16,7 @@ METEOR_SPEED_MULTIPLIER = 1
 POWERUP_SPEED = 4
 PLAYER_SPEED = 9
 MARGIN = 10
+MAX_BULLET = 50  # number of bullets which is allowed to be on screen at a moment
 
 # define colors
 WHITE = (255, 255, 255)
@@ -61,8 +62,11 @@ player_img.set_colorkey(BLACK)
 laser_img = pygame.image.load(os.path.join(img_dir, "laserRed05.png")).convert()
 laser_img.set_colorkey(BLACK)
 
-mob_img = pygame.image.load(os.path.join(img_dir, "enemyBlack5.png")).convert()
-mob_img.set_colorkey(BLACK)
+
+mob_img_list = []
+for image_file in ["enemyBlack5.png", "enemyBlue4.png", "enemyGreen3.png", "enemyRed2.png", "enemyBlack1.png"]:
+    mob_img_list.append(pygame.image.load(os.path.join(img_dir, image_file)).convert())
+    mob_img_list[-1].set_colorkey(BLACK)
 
 life_img = pygame.image.load(os.path.join(img_dir, "pill_red.png")).convert()
 life_img.set_colorkey(BLACK)
