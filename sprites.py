@@ -6,6 +6,39 @@ bullets = pygame.sprite.Group()
 powerups = pygame.sprite.Group()
 mobs = pygame.sprite.Group()
 meteors = pygame.sprite.Group()
+lifebars = pygame.sprite.Group()
+
+
+class Lifebar(pygame.sprite.Sprite):
+
+    HEIGHT = 10
+    MARGIN = 8
+
+    def __init__(self, sprite):
+        super().__init__()
+        self.sprite = sprite
+        self.single_bar_w = sprite.rect.width // sprite.HP
+        self.width = self.single_bar_w * sprite.HP
+        self.image = pygame.Surface((self.width, self.HEIGHT))
+        # for j in range(sprite.HP):
+        #     pygame.draw.rect(self.image, GREEN, (j * self.single_bar_w, 0, self.single_bar_w, self.HEIGHT), 0)
+        self.image.fill(GREEN)
+        self.rect = self.image.get_rect()
+        self.rect.centerx = sprite.rect.centerx
+        self.rect.bottom = sprite.rect.top - self.MARGIN
+
+    def update(self):
+        self.rect.centerx = self.sprite.rect.centerx
+        self.rect.bottom = self.sprite.rect.top - self.MARGIN
+
+    def redraw(self):
+        self.width = self.single_bar_w * self.sprite.HP
+        self.image = pygame.Surface((self.width, self.HEIGHT))
+        # for j in range(self.sprite.HP):
+        #     pygame.draw.rect(self.image, GREEN, (j * self.single_bar_w, 0, self.single_bar_w, self.HEIGHT), 0)
+        self.image.fill(GREEN)
+        self.rect = self.image.get_rect()
+
 
 # player sprite
 
@@ -28,6 +61,7 @@ class Player(pygame.sprite.Sprite):
         self.speedx = 0
         self.HP = 3
         self.shield = False
+        all_sprites.add(self)
 
     def update(self):
         self.rect.x += self.speedx
@@ -73,6 +107,8 @@ class Meteor(pygame.sprite.Sprite):
         self.rect.left = random.randint(0, WIDTH - self.rect.width)
         self.rect.bottom = random.randint(-2 * self.rect.height, 0)
         self.speedy = random.randint(3, 7)
+        all_sprites.add(self)
+        meteors.add(self)
 
     def update(self):
         self.rect.y += self.speedy
@@ -90,6 +126,11 @@ class Mob(pygame.sprite.Sprite):
         self.speedy = random.randint(1, 5)
         self.speedx = 0
         self.HP = 10
+        all_sprites.add(self)
+        mobs.add(self)
+        self.lifebar = Lifebar(self)
+        lifebars.add(self.lifebar)
+        all_sprites.add(self.lifebar)
 
     def update(self):
         self.speedx = random.randint(-4, 4)
@@ -104,8 +145,10 @@ class Mob(pygame.sprite.Sprite):
 
     def get_damage(self):
         self.HP -= 1
+        self.lifebar.redraw()
         if self.HP <= 0:
             self.kill()
+            self.lifebar.kill()
             print("Enemy destroyed!")
 
 # Bullet sprite

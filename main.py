@@ -1,4 +1,5 @@
-# Pygame template - skeleton for a new pygame project
+# A shoot'em up game
+
 from constants import *
 import sprites
 import time
@@ -18,7 +19,6 @@ power_up_funcs = [
 
 
 player = sprites.Player()
-sprites.all_sprites.add(player)
 
 
 # have to use this because, otherwise, for the first SPACE key pressing, the newest_bullet is not defined yet.
@@ -39,13 +39,9 @@ while running:
 
     while len(sprites.mobs) != 3:
         m = sprites.Mob()
-        sprites.all_sprites.add(m)
-        sprites.mobs.add(m)
 
     while len(sprites.meteors) != 5:
         m = sprites.Meteor()
-        sprites.all_sprites.add(m)
-        sprites.meteors.add(m)
 
     keystate = pygame.key.get_pressed()
     player.speedx = 0
@@ -70,7 +66,7 @@ while running:
 
     hits = pygame.sprite.groupcollide(
         sprites.mobs, sprites.bullets, False, True)
-    #print(hits)
+
     for m in hits:
         # this is necessary, because, otherwise the shooting ability was stuck when player shoots a mob within the range of forbidden margin for continious fire. This is due to the fact that when you kill a sprite by sprite.kill(), sprite maintains its attributes.
         hits[m][0].rect.bottom = -1
