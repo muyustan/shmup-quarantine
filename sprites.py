@@ -51,14 +51,15 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = player_img
         self.rect = self.image.get_rect()
-        self.radius = int(self.rect.width * .75 / 2)  # this radius attribute is needed to use circular collision check.
-        pygame.draw.circle(self.image, YELLOW, self.rect.center, self.radius, 3)
+        self.radius = int(self.rect.height / 2)  # this radius attribute is needed to use circular collision check.
+        pygame.draw.circle(self.image, GRAY, self.rect.center, self.radius, 3)
         # YOU HAVE TO DRAW THE CIRCLE BEFORE YOU MOVE THE SELF.IMAGE, BECAUSE OTHERWISE, THE SELF.RECT.CENTER COORDINATES WILL NOT BE RELATIVE TO THE SELF.IMAGE SURFACE, LIKE BELOW:
         # pygame.draw.circle(self.image, YELLOW, (self.rect.width // 2, self.rect.height // 2), self.radius, 3)
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT - 15  # to make it appear at a little bit higher on the screen.
-        self.HP = 3
+        self.HP = 300
         self.shield = False
+        self.score = 0
         all_sprites.add(self)
 
     def update(self):
@@ -102,7 +103,7 @@ class Player(pygame.sprite.Sprite):
 class Meteor(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = random.choice(list(meteor_images_dict.values()))
+        self.image, self.points = random.choice(list(meteor_dict.values()))
         self.image_copy = self.image.copy()  # we have to make a copy of image to use in rotations.
         self.rect = self.image.get_rect()
         self.radius = int(self.rect.width * .95 / 2)
@@ -134,7 +135,7 @@ class Meteor(pygame.sprite.Sprite):
         _center = self.rect.center
         self.rect = self.image.get_rect()
         self.rect.center = _center
-        pygame.draw.circle(self.image, BLUE, (self.rect.width // 2, self.rect.height // 2), self.radius, 3)
+        #pygame.draw.circle(self.image, BLUE, (self.rect.width // 2, self.rect.height // 2), self.radius, 3)
         # these 3 lines above basically makes sure that rectangle also keeps track of the rotation.
 
 # Mob sprite
@@ -201,7 +202,7 @@ class Bullet(pygame.sprite.Sprite):
             self.kill()  # built in method of pygame.sprite
 
 
-# powerup sprite
+# PowerUp sprite
 
 
 class PowerUp(pygame.sprite.Sprite):

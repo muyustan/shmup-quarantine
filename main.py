@@ -1,11 +1,12 @@
 # A shoot'em up game
 
 from constants import *
+from functions import *
 import sprites
 import time
 
 # initiate some variables
-max_bullet = 15  # number of bullets which is allowed to be on screen at a moment
+max_bullet = 5  # number of bullets which is allowed to be on screen at a moment
 running = True  # game loop control variable
 
 power_up_funcs = [
@@ -40,7 +41,7 @@ while running:
     while len(sprites.mobs) != 3:
         m = sprites.Mob()
 
-    while len(sprites.meteors) != 5:
+    while len(sprites.meteors) != 7:
         m = sprites.Meteor()
 
     keystate = pygame.key.get_pressed()
@@ -67,14 +68,15 @@ while running:
     hits = pygame.sprite.groupcollide(
         sprites.mobs, sprites.bullets, False, True)
 
-    for m in hits:
+    for mob in hits:
         # this is necessary, because, otherwise the shooting ability was stuck when player shoots a mob within the range of forbidden margin for continious fire. This is due to the fact that when you kill a sprite by sprite.kill(), sprite maintains its attributes.
-        hits[m][0].rect.bottom = -1
-        m.get_damage()
+        hits[mob][0].rect.bottom = -1
+        mob.get_damage()
 
     hits = pygame.sprite.groupcollide(sprites.meteors, sprites.bullets, True, True)
-    for m in hits:
-        hits[m][0].rect.bottom = -1  # same reasoning as above.
+    for meteor in hits:
+        hits[meteor][0].rect.bottom = -1  # same reasoning as above.
+        player.score += meteor.points
 
     hits = pygame.sprite.spritecollide(player, sprites.mobs, True)
     hits += pygame.sprite.spritecollide(player, sprites.meteors, True, pygame.sprite.collide_circle)  # instead of rectangular collison check, we do it based on sprite.radius attribute
@@ -92,7 +94,9 @@ while running:
     screen.blit(bg_img, (0, 0))
     # this is my way to fill background with appropriate dimensions.
     screen.blit(bg_img, (bg_img.get_size()[0], 0))
+    # screen.fill(YELLOW)
     sprites.all_sprites.draw(screen)
+    draw_text(screen, f"SCORE: {player.score}", 26, BLUE, (WIDTH, 0))
     # *after* drawing everything, flip the display
     pygame.display.flip()
 
