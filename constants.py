@@ -39,7 +39,19 @@ img_dir = os.path.join(os.path.dirname(__file__), "img")
 bg_img = pygame.image.load(os.path.join(img_dir, "starfield.png")).convert_alpha()
 player_img = pygame.image.load(os.path.join(img_dir, "playerShip1_blue.png")).convert_alpha()
 laser_img = pygame.image.load(os.path.join(img_dir, "laserRed05.png")).convert_alpha()
-meteor_img = pygame.image.load(os.path.join(img_dir, "meteorGrey_med1.png")).convert_alpha()
+meteor_images_dict = {
+
+    "med1_grey": pygame.image.load(os.path.join(img_dir, "meteorGrey_med1.png")).convert_alpha(),
+    "med1_brown": pygame.image.load(os.path.join(img_dir, "meteorBrown_med1.png")).convert_alpha(),
+    "big1_grey": pygame.image.load(os.path.join(img_dir, "meteorGrey_big1.png")).convert_alpha(),
+    "big2_grey": pygame.image.load(os.path.join(img_dir, "meteorGrey_big2.png")).convert_alpha(),
+    "big3_grey": pygame.image.load(os.path.join(img_dir, "meteorGrey_big3.png")).convert_alpha(),
+    "big1_brown": pygame.image.load(os.path.join(img_dir, "meteorBrown_big1.png")).convert_alpha(),
+    "big2_brown": pygame.image.load(os.path.join(img_dir, "meteorBrown_big2.png")).convert_alpha(),
+    "big3_brown": pygame.image.load(os.path.join(img_dir, "meteorBrown_big3.png")).convert_alpha()
+
+}
+
 mob_img = pygame.image.load(os.path.join(img_dir, "enemyBlack5.png")).convert_alpha()
 life_img = pygame.image.load(os.path.join(img_dir, "pill_red.png")).convert_alpha()
 shield_img = pygame.image.load(os.path.join(img_dir, "powerupBlue_shield.png")).convert_alpha()

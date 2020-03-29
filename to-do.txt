@@ -1,0 +1,3 @@
+Make a circle around the spaceship of blue color which will be
+activated in case of an active shield.
+
