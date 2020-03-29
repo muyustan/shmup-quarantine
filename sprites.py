@@ -66,9 +66,6 @@ class Player(pygame.sprite.Sprite):
 
 
 class Meteor(pygame.sprite.Sprite):
-
-    SPEED = 4
-
     def __init__(self):
         super().__init__()
         self.image = meteor_img
@@ -86,16 +83,30 @@ class Meteor(pygame.sprite.Sprite):
 class Mob(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.Surface((MOB_W, MOB_H))
-        self.image.fill(MAGENTA)
+        self.image = mob_img
         self.rect = self.image.get_rect()
         self.rect.left = random.randint(0, WIDTH - self.rect.width)
         self.rect.bottom = random.randint(-2 * self.rect.height, 0)
+        self.speedy = random.randint(1, 5)
+        self.speedx = 0
+        self.HP = 10
 
     def update(self):
-        self.rect.y += 6
-        if self.rect.top > HEIGHT:
+        self.speedx = random.randint(-4, 4)
+        self.rect.left += self.speedx
+        self.rect.centery += self.speedy
+        if self.rect.bottom > 300:
+            self.speedy = 0
+        if self.rect.right >= WIDTH:
+            self.rect.right = WIDTH
+        if self.rect.left <= 0:
+            self.rect.left = 0
+
+    def get_damage(self):
+        self.HP -= 1
+        if self.HP <= 0:
             self.kill()
+            print("Enemy destroyed!")
 
 # Bullet sprite
 

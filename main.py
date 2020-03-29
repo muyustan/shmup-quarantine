@@ -37,10 +37,10 @@ while running:
         else:
             pass
 
-    # while len(sprites.mobs) != 9:
-    #     m = sprites.Mob()
-    #     sprites.all_sprites.add(m)
-    #     sprites.mobs.add(m)
+    while len(sprites.mobs) != 3:
+        m = sprites.Mob()
+        sprites.all_sprites.add(m)
+        sprites.mobs.add(m)
 
     while len(sprites.meteors) != 5:
         m = sprites.Meteor()
@@ -59,7 +59,7 @@ while running:
     # If there are more than 10 bullets at a time on the screen, then no more new bullets can be fired.
     if keystate[pygame.K_ESCAPE]:
         running = False
-    if random.randint(0, 14530) > 14470:
+    if random.randint(0, 1000000) > 999000:  # to randomize the process
         power_up = sprites.PowerUp()
         sprites.all_sprites.add(power_up)
         sprites.powerups.add(power_up)
@@ -69,16 +69,19 @@ while running:
         power_up_funcs[pu.type](player)
 
     hits = pygame.sprite.groupcollide(
-        sprites.mobs, sprites.bullets, True, True)
+        sprites.mobs, sprites.bullets, False, True)
+    #print(hits)
     for m in hits:
         # this is necessary, because, otherwise the shooting ability was stuck when player shoots a mob within the range of forbidden margin for continious fire. This is due to the fact that when you kill a sprite by sprite.kill(), sprite maintains its attributes.
         hits[m][0].rect.bottom = -1
+        m.get_damage()
 
     hits = pygame.sprite.groupcollide(sprites.meteors, sprites.bullets, True, True)
     for m in hits:
         hits[m][0].rect.bottom = -1  # same reasoning as above.
 
     hits = pygame.sprite.spritecollide(player, sprites.mobs, True)
+    hits += pygame.sprite.spritecollide(player, sprites.meteors, True)
     for m in hits:
         player.decrease_HP()
         if player.HP <= 0:
