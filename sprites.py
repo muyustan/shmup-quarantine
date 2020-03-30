@@ -170,7 +170,7 @@ class Mob(pygame.sprite.Sprite):
             self.first = False
         if self.rect.top <= 30 and not self.first:
             self.speedy *= -1
-            self.bottom_limit = random.randint(int(self.rect.height * 1.2), HEIGHT / 2)
+            self.bottom_limit = random.randint(int(self.rect.height * 1.2), HEIGHT * .75)
         if self.rect.right >= WIDTH:
             self.rect.right = WIDTH
             self.speedx *= -1
