@@ -1,4 +1,4 @@
-from constants import *
+from configurations import *
 
 # create sprite groups
 all_sprites = pygame.sprite.Group()
