@@ -1,8 +1,19 @@
 # A shoot'em up game
 
-from constants import *
-from functions import *
+from configurations import *
 import sprites
+
+# user defined functions
+
+
+def draw_text(surface, text, size, color, pos):
+    x, y = pos
+    font = pygame.font.Font(FONT, size)
+    text_surface = font.render(text, True, color, None)
+    text_rect = text_surface.get_rect()
+    text_rect.topright = (x, y)
+    surface.blit(text_surface, text_rect)
+
 
 # initiate some variables
 
@@ -19,7 +30,6 @@ power_up_funcs = [
 
 
 player = sprites.Player()
-i = 0
 
 # have to use this because, otherwise, for the first SPACE key pressing, the newest_bullet is not defined yet.
 newest_bullet = sprites.Bullet(0, 0)
@@ -53,8 +63,8 @@ while running:
         player.speedx -= sprites.Player.SPEED
     if (keystate[pygame.K_SPACE] or keystate[pygame.K_UP]) and (player.rect.top - newest_bullet.rect.bottom) > (sprites.Bullet.HEIGHT + MARGIN) and not (len(sprites.bullets) >= MAX_BULLET):
         newest_bullet = player.shoot()
-    # BULLET_H refers to height of the bullet and margin refers to the minimum allowable margin between two consequent b
-    # If there are more than 10 bullets at a time on the screen, then no more new bullets can be fired.
+    # MARGIN refers to the minimum allowable margin between two consequent b
+    # If there are more than MAX_BULLET number of bullets at a time on the screen, then no more new bullets can be fired.
     if keystate[pygame.K_ESCAPE]:
         running = False
     if random.randint(0, 1000000) > 999000:  # to randomize the process
@@ -75,6 +85,7 @@ while running:
         mob.get_damage()
 
     hits = pygame.sprite.groupcollide(sprites.meteors, sprites.bullets, True, True)
+
     for meteor in hits:
         random.choice(expl_meteor_sound_list).play()
         hits[meteor][0].rect.bottom = -1  # same reasoning as above.
@@ -92,11 +103,9 @@ while running:
     sprites.all_sprites.update()
 
     # Draw / render
-    # screen.fill(YELLOW)  # to debug any possible mistakes on bg placement
     screen.blit(bg_img, (0, 0))
     # this is my way to fill background with appropriate dimensions.
     screen.blit(bg_img, (bg_img.get_size()[0], 0))
-    # screen.fill(YELLOW)
     sprites.all_sprites.draw(screen)
     draw_text(screen, f"SCORE: {player.score}", 26, BLUE, (WIDTH, 0))
     # *after* drawing everything, flip the display

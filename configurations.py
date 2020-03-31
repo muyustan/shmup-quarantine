@@ -4,6 +4,7 @@
 import pygame
 import random
 import os
+from pathlib import Path
 
 # define constants
 WIDTH = 700  # make sure WIDTH % 2 = 0
@@ -36,17 +37,24 @@ pygame.mixer.init()  # sound system init
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("SHMUP - QUARANTINE")
 clock = pygame.time.Clock()
+FONT = pygame.font.match_font('arial')
 
 # directories
-img_dir = os.path.join(os.path.dirname(__file__), "img")
-sound_dir = os.path.join(os.path.dirname(__file__), "sound")
+
+# img_dir = os.path.join(os.path.dirname(__file__), "img")
+# sound_dir = os.path.join(os.path.dirname(__file__), "sound")
+
+root_dir = Path(__file__).parent.resolve()
+img_dir = root_dir / "img"
+sound_dir = root_dir / "sound"
 
 # Load all game sounds
 
-pygame.mixer.music.load(os.path.join(sound_dir, 'FrozenJam-SeamlessLoop.ogg'))
+pygame.mixer.music.load(str(sound_dir / 'FrozenJam-SeamlessLoop.ogg'))
 pygame.mixer.music.set_volume(0.4)
 
 shoot_sound = pygame.mixer.Sound(os.path.join(sound_dir, "cheuw.wav"))
+
 expl_meteor_sound_list = []
 for sound_file in ["expl_meteor_1.wav"]:  # a sound effect will be chosen from this list.
     expl_meteor_sound_list.append(pygame.mixer.Sound(os.path.join(sound_dir, sound_file)))
@@ -87,7 +95,3 @@ meteor_dict = {  # "name" : [pygame_image, point]
     "big1_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big1.png")).convert_alpha(), 1],
 
 }
-
-# "big3_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big3.png")).convert_alpha(), 1],
-# "big2_gray": [pygame.image.load(os.path.join(img_dir, "meteorGrey_big2.png")).convert_alpha(), 1],
-# "big2_brown": [pygame.image.load(os.path.join(img_dir, "meteorBrown_big2.png")).convert_alpha(), 1],
