@@ -3,8 +3,16 @@
 
 import pygame
 import random
+import sys
 import os
 from pathlib import Path
+
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
 
 # define constants
 WIDTH = 700  # make sure WIDTH % 2 = 0
@@ -47,13 +55,16 @@ clock = pygame.time.Clock()
 # img_dir = os.path.join(os.path.dirname(__file__), "img")
 # sound_dir = os.path.join(os.path.dirname(__file__), "sound")
 
-root_dir = Path(__file__).parent.resolve()
-img_dir = root_dir / "img"
-sound_dir = root_dir / "sound"
+# root_dir = Path(__file__).parent.resolve()
+# img_dir = root_dir / "img"
+# sound_dir = root_dir / "sound"
+
+img_dir = resource_path("img")
+sound_dir = resource_path("sound")
 
 # Load all game sounds
 
-pygame.mixer.music.load(str(sound_dir / 'FrozenJam-SeamlessLoop.ogg'))
+pygame.mixer.music.load(os.path.join(sound_dir, 'FrozenJam-SeamlessLoop.ogg'))
 pygame.mixer.music.set_volume(0.1)
 
 shoot_sound = pygame.mixer.Sound(os.path.join(sound_dir, "cheuw.wav"))
@@ -78,7 +89,7 @@ laser_img.set_colorkey(BLACK)
 
 mob_img_list = []
 for image_file in ["enemyBlack5.png", "enemyBlue4.png", "enemyGreen3.png", "enemyRed2.png", "enemyBlack1.png"]:
-    mob_img_list.append(pygame.image.load(str(img_dir / image_file)).convert())
+    mob_img_list.append(pygame.image.load(os.path.join(img_dir, image_file)).convert())
     mob_img_list[-1].set_colorkey(BLACK)
 
 life_img = pygame.image.load(os.path.join(img_dir, "pill_red.png")).convert()
