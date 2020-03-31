@@ -1,1 +1,0 @@
-Spriteların layer olayı, en son oluşturulan en üstte şeklinde.
