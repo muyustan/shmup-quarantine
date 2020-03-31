@@ -76,9 +76,6 @@ class Player(pygame.sprite.Sprite):
         bullets.add(bullet)
         return bullet  # I need this to set the margin in continious fire.
 
-    def change_color(self):
-        pass
-
     def increase_HP(self):
         if self.HP <= 2:
             self.HP += 1
