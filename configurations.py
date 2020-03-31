@@ -30,6 +30,9 @@ MAGENTA = (255, 0, 255)
 CYAN = (0, 255, 255)
 GRAY = (127, 127, 127)
 
+# other constants
+FONT = pygame.font.match_font('arial')
+
 # setups
 
 pygame.init()
@@ -37,7 +40,7 @@ pygame.mixer.init()  # sound system init
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("SHMUP - QUARANTINE")
 clock = pygame.time.Clock()
-FONT = pygame.font.match_font('arial')
+
 
 # directories
 
@@ -51,13 +54,15 @@ sound_dir = root_dir / "sound"
 # Load all game sounds
 
 pygame.mixer.music.load(str(sound_dir / 'FrozenJam-SeamlessLoop.ogg'))
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(0.1)
 
 shoot_sound = pygame.mixer.Sound(os.path.join(sound_dir, "cheuw.wav"))
+shoot_sound.set_volume(0.3)
 
 expl_meteor_sound_list = []
 for sound_file in ["expl_meteor_1.wav"]:  # a sound effect will be chosen from this list.
     expl_meteor_sound_list.append(pygame.mixer.Sound(os.path.join(sound_dir, sound_file)))
+    expl_meteor_sound_list[-1].set_volume(0.3)
 
 # Load all game graphics
 
@@ -73,7 +78,7 @@ laser_img.set_colorkey(BLACK)
 
 mob_img_list = []
 for image_file in ["enemyBlack5.png", "enemyBlue4.png", "enemyGreen3.png", "enemyRed2.png", "enemyBlack1.png"]:
-    mob_img_list.append(pygame.image.load(os.path.join(img_dir, image_file)).convert())
+    mob_img_list.append(pygame.image.load(str(img_dir / image_file)).convert())
     mob_img_list[-1].set_colorkey(BLACK)
 
 life_img = pygame.image.load(os.path.join(img_dir, "pill_red.png")).convert()
