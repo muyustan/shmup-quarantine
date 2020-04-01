@@ -79,16 +79,18 @@ while running:
     hits = pygame.sprite.groupcollide(
         sprites.mobs, sprites.bullets, False, True)
 
-    for mob in hits:
+    for mob, bullets in hits.items():
         # this is necessary, because, otherwise the shooting ability was stuck when player shoots a mob within the range of forbidden margin for continious fire. This is due to the fact that when you kill a sprite by sprite.kill(), sprite maintains its attributes.
-        hits[mob][0].rect.bottom = -1
+        for bullet in bullets:
+            bullet.rect.bottom = -1
         mob.get_damage()
 
     hits = pygame.sprite.groupcollide(sprites.meteors, sprites.bullets, True, True)
 
-    for meteor in hits:
+    for meteor, bullets in hits.items():  # in hits does not work, must use dict.items()
         random.choice(expl_meteor_sound_list).play()
-        hits[meteor][0].rect.bottom = -1  # same reasoning as above.
+        for bullet in bullets:
+            bullet.rect.bottom = -1
         player.score += meteor.points
 
     hits = pygame.sprite.spritecollide(player, sprites.mobs, True)
