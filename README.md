@@ -5,6 +5,6 @@ Just download/clone the folder and run `main.py` by:
 
 `python3 main.py`
 
-Note that you should have `pygame` module installed on your system, if not, install by:
+Note that you should have `pygame` module installed on your system, if not, install with the following:
 
 `python3 -m pip install pygame`

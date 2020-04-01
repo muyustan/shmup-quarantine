@@ -1,11 +1,19 @@
 # all imports and constant definitions
 # Frozen Jam by tgfcoder <https://twitter.com/tgfcoder> licensed under CC-BY-3 <http://creativecommons.org/licenses/by/3.0/>
-
 import pygame
 import random
 import sys
 import os
-from pathlib import Path
+import platform
+# from pathlib import Path
+
+# to solve the issues of the screen resolution in Windows OS.
+
+if platform.system() == "Windows":
+    import ctypes
+    ctypes.windll.user32.SetProcessDPIAware()
+else:
+    pass
 
 
 def resource_path(relative_path):
