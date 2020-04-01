@@ -1,5 +1,6 @@
-# all imports and constant definitions
 # Frozen Jam by tgfcoder <https://twitter.com/tgfcoder> licensed under CC-BY-3 <http://creativecommons.org/licenses/by/3.0/>
+
+# all imports and constant definitions
 import pygame
 import random
 import sys

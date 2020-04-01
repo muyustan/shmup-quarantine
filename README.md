@@ -8,3 +8,6 @@ Just download/clone the folder and run `main.py` by:
 Note that you should have `pygame` module installed on your system, if not, install with the following:
 
 `python3 -m pip install pygame`
+
+If you are interested on how to make an executable of this, check my aswer here:
+https://stackoverflow.com/a/60953781/117010711
